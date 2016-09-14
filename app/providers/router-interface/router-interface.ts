@@ -61,7 +61,8 @@ netWanConf(){
  * 返回：19
  */
 netWanConfSet(conf){
-  return this.http.get(this.mergeUrl(RouterInterface.API.net.wan_conf,{})).map(res => res.json());
+  let url = this.mergeUrl(RouterInterface.API.net.wan_conf,conf);
+  return this.http.get(url).map(res => res.json());
 }
 
   /**

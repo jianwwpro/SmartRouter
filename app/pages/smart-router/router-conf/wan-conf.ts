@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController,ModalController,ViewController } from 'ionic-angular';
+import { NavController,ModalController,ViewController,ToastController } from 'ionic-angular';
 import {RouterInterface} from '../../../providers/router-interface/router-interface'
 
 @Component({
@@ -12,15 +12,20 @@ export class WanConfPage {
         mode:2
     }
 
-  constructor(private viewController:ViewController,private navCtrl: NavController,private modalController: ModalController,private api:RouterInterface) {
+  constructor(private toastController:ToastController,private viewController:ViewController,private navCtrl: NavController,private modalController: ModalController,private api:RouterInterface) {
   }
 
-    save(){
-        this.api.netWanConfSet(this.conf).map(res=>{
-            console.log(res);
-            alert(JSON.stringify(this.conf));
+    saveConf(){
+        this.api.netWanConfSet(this.conf).subscribe(res=>{
+            this.viewController.dismiss();
+        },error=> {
+            this.toastController.create({
+                message:'网络错误',
+                position:'bottom',
+                duration:1000
+            }).present();
         });
-        this.viewController.dismiss();    
+            
     }
 
   
