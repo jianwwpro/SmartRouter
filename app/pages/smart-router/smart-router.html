@@ -1,0 +1,90 @@
+<!--
+  Generated template for the SmartRouterPage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+		<!--<ion-buttons start>
+			<button><ion-icon name="settings"></ion-icon></button>
+		</ion-buttons>-->
+    <ion-title>智能路由</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content >
+	
+	<div class="wifi-info" padding>
+
+		<div class="not-login" >
+			<button block *ngIf="beLoginShow" (click)="openLogin()">登录</button>
+			<button block *ngIf="beConnectionShow" (click)="openConnection()">连接WIFI</button>
+		</div>
+		
+		<div class="info" *ngIf="isLogin">
+			<div class="info1 clearfix">
+				<p class="name">我的路由：<span>隔壁家老王的网你也敢蹭</span></p>
+				<button outline small>点击修改</button>
+			</div>
+			<div class="info2 clearfix">
+				<p>路由状态：<span>运行中</span></p><button fab small hight-light></button>
+			</div>
+			<div class="info3">
+				<p>上行速度：<span>1239</span>kb/s</p>
+			</div>
+			<div class="info4">
+				<p>上行速度：<span>1239</span>kb/s</p>
+			</div>
+			<div class="info1">
+				<p>当前设备数：<span>4</span>台</p><button outline small>立即重启</button>
+			</div>
+			
+			<div class="info6">
+				<p>持续运行时间：<span>23</span>小时</p>
+			</div>
+
+			<div class="info7">
+				<p>提示：重启路由可以清除缓存，提高路由速度。建议每月重启一次。</p>
+			</div>
+		</div>
+
+	</div>
+<div class="line"></div>
+
+<section class="section" padding>
+<p class="title">基本设置</p>
+<ion-grid>
+	<ion-row>
+    	<ion-col width-25 (click)="openWanConf()">
+			<ion-thumbnail>
+				<img src="imgs/u21.png">
+			</ion-thumbnail>
+			<p>Wan设置</p>
+		</ion-col>
+	<ion-col width-25>
+			<ion-thumbnail>
+				<img src="imgs/u21.png">
+			</ion-thumbnail>
+			<p>网络设置</p>
+		</ion-col>
+		<ion-col width-25>
+			<ion-thumbnail>
+				<img src="imgs/u21.png">
+			</ion-thumbnail>
+			<p>网络设置</p>
+		</ion-col>
+		<ion-col width-25>
+			<ion-thumbnail>
+				<img src="imgs/u21.png">
+			</ion-thumbnail>
+			<p>网络设置</p>
+		</ion-col>
+		
+  </ion-row>
+</ion-grid>
+</section>
+<div class="line"></div>
+</ion-content>

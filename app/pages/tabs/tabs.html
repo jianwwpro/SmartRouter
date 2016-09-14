@@ -1,5 +1,6 @@
-<ion-tabs>
-  <ion-tab [root]="tab1Root" tabTitle="Home" tabIcon="home"></ion-tab>
-  <ion-tab [root]="tab2Root" tabTitle="About" tabIcon="information-circle"></ion-tab>
-  <ion-tab [root]="tab3Root" tabTitle="Contact" tabIcon="contacts"></ion-tab>
+<ion-tabs #myTabs>
+  <ion-tab [root]="smartRouterPage" tabTitle="智能路由" tabIcon="cloud"></ion-tab>
+  <ion-tab [root]="businessPage" tabTitle="我的业务" tabIcon="briefcase"></ion-tab>
+  <ion-tab [root]="mallPage" tabTitle="商城" tabIcon="globe"></ion-tab>
+  <ion-tab [root]="userCenterPage" tabTitle="我的" tabIcon="person"></ion-tab>
 </ion-tabs>
