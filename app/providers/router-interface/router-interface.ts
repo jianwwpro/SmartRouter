@@ -12,7 +12,8 @@ import 'rxjs/add/operator/map';
 
 @Injectable()
 export class RouterInterface {
-  
+  static proxyHost =  'http://localhost:8200/proxy/';
+  //192.168.8.1/protocol.csp?system=system&opt=login&function=set&usrid=93279E3308BDBBEED946FC965017F67A
   static REQUEST_URL='protocol.csp';
 
   static API={
@@ -61,7 +62,10 @@ netWanConf(){
  * 返回：19
  */
 netWanConfSet(conf){
-  let url = this.mergeUrl(RouterInterface.API.net.wan_conf,conf);
+  delete conf.opt;
+  delete conf.fname;
+  delete conf['function'];
+  let url = this.mergeUrl(RouterInterface.API.net.wan_conf_set,conf);
   return this.http.get(url).map(res => res.json());
 }
 
@@ -70,7 +74,9 @@ netWanConfSet(conf){
   * http://192.168.8.1/protocol.csp?fname=system&opt=login&function=set&usrid=00112233445566778899AABBCCDDEEFF
   */
   mergeUrl(sysParams:string[],otherParam:{}){
-    let url = "http://"+this.host+"/"+RouterInterface.REQUEST_URL+"?system="+sysParams[0]+"&opt="+sysParams[1]+"&function="+sysParams[2];
+  
+  let url = RouterInterface.proxyHost+this.host+"/"+RouterInterface.REQUEST_URL+"?fname="+sysParams[0]+"&opt="+sysParams[1]+"&function="+sysParams[2];
+  //let url = "http://"+this.host+"/"+RouterInterface.REQUEST_URL+"?fname="+sysParams[0]+"&opt="+sysParams[1]+"&function="+sysParams[2];
     for(let key in otherParam){
       url+="&"+key+"="+otherParam[key];
     }

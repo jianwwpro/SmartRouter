@@ -10,7 +10,7 @@ var gulp = require('gulp'),
  * Add ':before' or ':after' to any Ionic project command name to run the specified
  * tasks before or after the command.
  */
-gulp.task('serve:before', ['watch']);
+gulp.task('serve:before', ['watch','server']);
 gulp.task('emulate:before', ['build']);
 gulp.task('deploy:before', ['build']);
 gulp.task('build:before', ['build']);
@@ -63,6 +63,23 @@ gulp.task('build', ['clean'], function(done){
     }
   );
 });
+
+   var Proxy = require('gulp-connect-proxy');
+var connect = require('gulp-connect');
+
+gulp.task("server", function () {
+    connect.server({
+        root: "app",
+        port: 8000,
+        livereload: true,
+        middleware: function (connect, opt) {
+            opt.route = '/proxy';
+            var proxy = new Proxy(opt);
+            return [proxy];
+        }
+    });
+});
+
 
 gulp.task('sass', buildSass);
 gulp.task('html', copyHTML);

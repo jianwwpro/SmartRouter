@@ -5,6 +5,9 @@ import { Network } from 'ionic-native';
 import {WifiTipPage} from './wifi-tip';
 import {UserLoginPage} from '../user-center/user-login';
 import {WanConfPage} from './router-conf/wan-conf'
+import {LanConfPage} from './router-conf/lan-conf'
+import {RouterInterface} from '../../providers/router-interface/router-interface'
+
 /*
   Generated class for the SmartRouterPage page.
 
@@ -13,19 +16,22 @@ import {WanConfPage} from './router-conf/wan-conf'
 */
 @Component({
   templateUrl: 'build/pages/smart-router/smart-router.html',
+  providers:[RouterInterface]
 })
 export class SmartRouterPage {
   private userUtiils : UserUtiils;
-  private beWifiTip : boolean =false;
-  private beLoginShow: boolean=false;
-  private beConnectionShow: boolean=false;
-  private isLogin:boolean;
+  beWifiTip : boolean =false;
+  beLoginShow: boolean=false;
+  beConnectionShow: boolean=false;
+  isLogin:boolean;
+  beFirstEnter:boolean = true;
+  interval = null;
+  aaa="danger";
+  //路由信息
+  routerInfo:any;
 
-  private beFirstEnter:boolean = true;
 
-
-
-  constructor(private view:ViewController, private navCtrl: NavController,private modalController:ModalController,private popoverController:PopoverController,private loadingController: LoadingController) {
+  constructor(private view:ViewController, private navCtrl: NavController,private modalController:ModalController,private popoverController:PopoverController,private loadingController: LoadingController,private api:RouterInterface) {
     this.userUtiils  = new UserUtiils(modalController);
     //监听网络变化
     let disconnectSubscription = Network.onDisconnect().subscribe(() => {
@@ -40,11 +46,14 @@ export class SmartRouterPage {
     });
     
   //检查是否登录
-    let self = this;
+   // let self = this;
 
-    this.userUtiils.isLogin(function(login){
-      self.isLogin=login;
+    this.userUtiils.isLogin(login=>{
+      this.isLogin=login;
     });
+
+
+    
   }
 
 /**
@@ -52,7 +61,18 @@ export class SmartRouterPage {
  */
   openLogin(){
     let loginPage = this.modalController.create(UserLoginPage);
+    loginPage.onDidDismiss( obj=> {
+      if(obj&&obj.success&&obj.success===1){
+        //this.stateChange();
+        //this.beLoginShow=false;
+        //this.beConnectionShow=false;
+        
+        this.stateChange();
+        console.log(this.beLoginShow,this.beConnectionShow);
+      }
+    });
     loginPage.present();
+
   }
 
   //打开连接wifi窗口
@@ -69,6 +89,10 @@ export class SmartRouterPage {
   	if(!this.beWifiTip)
     //	this.userUtiils.wifiTipFilter();
     this.beWifiTip=true;
+//定时获取路由信息
+    if(this.interval==null){
+      this.intervalInfo();
+    }
     
   }
   /**
@@ -90,10 +114,25 @@ export class SmartRouterPage {
             this.isLogin=true;
             this.beLoginShow=false;
           }
+         
         });
       }
  		 }, 1000);
   }
+
+//定时获取路由信息
+intervalInfo(){
+  
+  this.interval = self.setInterval(()=>{
+      this.api.sysMain(0).subscribe(res=>{
+          //console.log(res);
+          this.routerInfo=res;
+        },error=>{
+
+        });
+  }
+  ,2000);
+}
 
 
 /**
@@ -102,4 +141,20 @@ export class SmartRouterPage {
   openWanConf(){
     this.navCtrl.push(WanConfPage);
   }
+/**
+ * 打开LAN设置
+ */
+  openLanConf(){
+    this.navCtrl.push(LanConfPage);
+  }
+
+/**
+ * 打开wifi设置
+ */
+  openWifiConf(){
+
+  }
+
+
+
 }

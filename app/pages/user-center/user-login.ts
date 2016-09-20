@@ -39,7 +39,7 @@ login(){
   uid = uid.toUpperCase();
   //调用接口
   this.api.login(uid).subscribe(res=>{
-    alert(res.error);
+    
     if(res.error===10001||res.error===20100000){
       this.toastController.create({
         message:'账号或密码错误',
@@ -49,8 +49,8 @@ login(){
     }
     else if(res.error===0){
       LocalUtiils.getLocal().set("userName",uid);
-      
-      this.view.dismiss();
+//      LocalUtiils.getLocal().set("password",this.user.password);
+      this.view.dismiss({success:1});
     }else{
       this.toastController.create({
         message:'登录出错',

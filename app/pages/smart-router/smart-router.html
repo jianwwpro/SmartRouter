@@ -16,7 +16,6 @@
 </ion-header>
 
 <ion-content >
-	
 	<div class="wifi-info" padding>
 
 		<div class="not-login" >
@@ -30,20 +29,20 @@
 				<button outline small>点击修改</button>
 			</div>
 			<div class="info2 clearfix">
-				<p>路由状态：<span>运行中</span></p><button fab small hight-light></button>
+				<p>路由状态：<span>{{routerInfo&&routerInfo.connected?'在线':'断线'}}</span></p><button fab small class="{{routerInfo&&routerInfo.connected?'highlight':'dark'}}"></button>
 			</div>
 			<div class="info3">
-				<p>上行速度：<span>1239</span>kb/s</p>
+				<p>上行速度：<span>{{routerInfo&&routerInfo.up_speed}}</span>kb/s</p>
 			</div>
 			<div class="info4">
-				<p>上行速度：<span>1239</span>kb/s</p>
+				<p>下行速度：<span>{{routerInfo&&routerInfo.cur_speed}}</span>kb/s</p>
 			</div>
-			<div class="info1">
-				<p>当前设备数：<span>4</span>台</p><button outline small>立即重启</button>
+			<div class="info1 clearfix">
+				<p>当前设备数：<span>{{routerInfo&&routerInfo.terminals.length}}</span>台</p><button outline small>立即重启</button>
 			</div>
 			
-			<div class="info6">
-				<p>持续运行时间：<span>23</span>小时</p>
+			<div class="info3">
+				<p>持续运行时间：<span>{{routerInfo&& ((routerInfo.ontime/60/60)+"").substring(0,((routerInfo.ontime/60/60)+"").indexOf(".") + 2)}}</span>小时</p>
 			</div>
 
 			<div class="info7">
@@ -58,29 +57,23 @@
 <p class="title">基本设置</p>
 <ion-grid>
 	<ion-row>
-    	<ion-col width-25 (click)="openWanConf()">
-			<ion-thumbnail>
+    	<ion-col width-25 (click)="openWanConf()" tappable>
+			<ion-thumbnail >
 				<img src="imgs/u21.png">
 			</ion-thumbnail>
-			<p>Wan设置</p>
+			<p>上网设置</p>
 		</ion-col>
-	<ion-col width-25>
-			<ion-thumbnail>
+		<ion-col width-25  (click)="openLanConf()" tappable>
+			<ion-thumbnail >
 				<img src="imgs/u21.png">
 			</ion-thumbnail>
-			<p>网络设置</p>
+			<p>LAN设置</p>
 		</ion-col>
-		<ion-col width-25>
-			<ion-thumbnail>
+		<ion-col width-25  (click)="openLanConf()" tappable>
+			<ion-thumbnail >
 				<img src="imgs/u21.png">
 			</ion-thumbnail>
-			<p>网络设置</p>
-		</ion-col>
-		<ion-col width-25>
-			<ion-thumbnail>
-				<img src="imgs/u21.png">
-			</ion-thumbnail>
-			<p>网络设置</p>
+			<p>LAN设置</p>
 		</ion-col>
 		
   </ion-row>

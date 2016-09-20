@@ -7,149 +7,183 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Wan设置</ion-title>
+    <ion-title>上网设置</ion-title>
   </ion-navbar>
 
 </ion-header>
 
-<ion-content padding>
-	<!--pppoe显示-->
-    <ion-list *ngIf="conf.mode==2">
-        <ion-item>
-            <ion-label primary >账号</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.user"></ion-input>
-        </ion-item>
-         <ion-item>
-            <ion-label primary >密码</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.passwd"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >服务器名</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.conf_server"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >MAC地址</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mac"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >接入方式</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mode"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >MTU</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mtu"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >DNS</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.dns"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >备用DNS1</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.dns1"></ion-input>
-        </ion-item>
-    </ion-list>
+<ion-content >
 
-    <!--dhcp显示-->
-    <ion-list *ngIf="conf.mode==1">
-        <ion-item>
-            <ion-label primary >MAC地址</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mac"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >接入方式</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mode"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >MTU</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mtu"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >DNS</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.dns"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >备用DNS</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.dns1"></ion-input>
-        </ion-item>
-    </ion-list>
+ <div padding>
+        <ion-segment [(ngModel)]="conf.mode" >
+            <ion-segment-button value="2">宽带拨号</ion-segment-button>
+            <ion-segment-button value="3">静态IP</ion-segment-button>
+            <ion-segment-button value="1">动态IP</ion-segment-button>
+            <ion-segment-button value="4">无线中继</ion-segment-button>
 
+        </ion-segment>
+    </div>
+
+    <div [ngSwitch]="conf.mode">
+        
+        <ion-list *ngSwitchCase="'1'">
+            <ion-item>
+            <p>动态IP一般适用于内部网络，连上路由器后就可以直接上网。</p>
+            </ion-item> 
+        </ion-list>
+        
+        <ion-list *ngSwitchCase="'2'">
+             <ion-item>
+                <ion-label primary stacked>宽带账号</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.user"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary stacked>宽带密码</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.passwd"></ion-input>
+            </ion-item>
+        </ion-list>
+
+         <ion-list *ngSwitchCase="'3'">
+            <ion-item>
+                <ion-label primary stacked>IP</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.ip"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary stacked>子网掩码</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mask"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary stacked>网关</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.gw"></ion-input>
+            </ion-item>
+        </ion-list>
+
+         <ion-list *ngSwitchCase="'4'">
+            <ion-item>
+                <ion-label primary stacked>WIFI名称</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.ssid" readonly></ion-input>
+            </ion-item>
+        </ion-list>
+    </div>
+
+    <!--<ion-list >
+        <ion-item>
+            <ion-label primary >连接类型</ion-label>
+            <ion-select [(ngModel)]="conf.mode">
+                <ion-option value="2">宽带拨号</ion-option>
+                <ion-option value="1">DHCP</ion-option>
+                <ion-option value="3">静态</ion-option>
+                <ion-option value="4">WISP</ion-option>
+                <ion-option value="5">3G</ion-option>
+            </ion-select>
+        </ion-item>-->
+        <!--dhcp显示-->
+        <!--<div *ngIf="conf.mode==1">
+            <ion-item>
+                <ion-label primary >MAC地址</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mac"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >MTU</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mtu"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >DNS</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.dns"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >备用DNS</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.dns1"></ion-input>
+            </ion-item>
+        </div>-->
+
+	    <!--pppoe显示-->
+        <!--<div *ngIf="conf.mode==2">
+            <ion-item>
+                <ion-label primary >宽带账号</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.user"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >宽带密码</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.passwd"></ion-input>
+            </ion-item>-->
+            <!--<ion-item>
+                <ion-label primary >服务器名</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.conf_server"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >MAC地址</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mac"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >MTU</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mtu"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >DNS</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.dns"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >备用DNS1</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.dns1"></ion-input>
+            </ion-item>-->
+        <!--</div>-->
      <!--static显示-->
-    <ion-list *ngIf="conf.mode==3">
-        <ion-item>
-            <ion-label primary >IP</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.ip"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >子网掩码</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mask"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >网关</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.gw"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >MAC地址</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mac"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >接入方式</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mode"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >MTU</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mtu"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >DNS</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.dns"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >备用DNS</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.dns1"></ion-input>
-        </ion-item>
-    </ion-list>
-  
-    <!--wisp显示-->
-    <ion-list *ngIf="conf.mode==4">
-        <ion-item>
-            <ion-label primary >ssid</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.ssid" placeholder="要连接的 WIFI AP SSID(由协议 16 返回)"></ion-input>
-        </ion-item>
-        <ion-item>
-            <ion-label primary >AP加密认证方式</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.security" placeholder="加密方式(由协议 16 返回)"></ion-input>
-        </ion-item>
+        <!--<div *ngIf="conf.mode==3">
+            <ion-item>
+                <ion-label primary >IP</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.ip"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >子网掩码</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mask"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >网关</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.gw"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >接入方式</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mode"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >MTU</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mtu"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >DNS</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.dns"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >备用DNS</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.dns1"></ion-input>
+            </ion-item>
+        </div>-->
+        <!--wisp显示-->
+        <!--<div *ngIf="conf.mode==4">
+            <ion-item>
+                <ion-label primary >ssid</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.ssid" placeholder="要连接的 WIFI AP SSID(由协议 16 返回)"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >AP加密认证方式</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.security" placeholder="加密方式(由协议 16 返回)"></ion-input>
+            </ion-item>
 
-        <ion-item>
-            <ion-label primary >无线密码</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.key"></ion-input>
-        </ion-item>
-         <ion-item>
-            <ion-label primary >通道</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.channel"></ion-input>
-        </ion-item>
+            <ion-item>
+                <ion-label primary >无线密码</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.key"></ion-input>
+            </ion-item>
+            <ion-item>
+                <ion-label primary >通道</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.channel"></ion-input>
+            </ion-item>
 
-        <ion-item>
-            <ion-label primary >MAC地址</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mac"></ion-input>
-        </ion-item>
-
-        <ion-item>
-            <ion-label primary >接入方式</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mode"></ion-input>
-        </ion-item>
-       
-    </ion-list>
-    <!--wisp显示-->
-    <ion-list *ngIf="conf.mode==5">
-       
-        <ion-item>
-            <ion-label primary >接入方式</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="conf.mode"></ion-input>
-        </ion-item>
-       
-    </ion-list>
-
-
+            <ion-item>
+                <ion-label primary >MAC地址</ion-label>
+                <ion-input type="text" value="" [(ngModel)]="conf.mac"></ion-input>
+            </ion-item>
+        </div>
+    </ion-list>-->
 	<button block (click)="saveConf()">保存</button>
 </ion-content>
