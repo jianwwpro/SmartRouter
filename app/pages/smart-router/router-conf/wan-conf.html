@@ -204,7 +204,8 @@
             </ion-item>
         </div>
     </ion-list>-->
-	<button block (click)="saveConf()" *ngIf="conf.mode!=4">保存</button>
-    	<button block (click)="fetchWifiList()" *ngIf="conf.mode==4">刷新</button>
-
+    <div padding>
+        <button block (click)="fetchWifiList()" *ngIf="conf.mode==4" refresh>刷新</button>
+        <button block (click)="saveConf()" *ngIf="conf.mode!=4||currentMode!=4">保存</button>
+    </div>
 </ion-content>

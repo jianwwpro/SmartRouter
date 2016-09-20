@@ -12,6 +12,7 @@ export class WanConfPage {
     conf:any={
         mode:2+""
     }
+    currentMode:number;
     wifiList=[];
     beFirstEnter=false;
 
@@ -51,6 +52,7 @@ export class WanConfPage {
         let loading = this.loadingController.create();
         loading.present();
         this.api.netWanConf().subscribe(res=>{
+            this.currentMode=res.mode;
             if(res.mode===4 && this.beFirstEnter==false){
                 this.fetchWifiList();
                 this.beFirstEnter=true;

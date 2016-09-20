@@ -26,7 +26,9 @@ export class SmartRouterPage {
   isLogin:boolean;
   beFirstEnter:boolean = true;
   interval = null;
-  aaa="danger";
+  wifi:any={
+    ssid:''
+  };
   //路由信息
   routerInfo:any;
 
@@ -89,9 +91,22 @@ export class SmartRouterPage {
   	if(!this.beWifiTip)
     //	this.userUtiils.wifiTipFilter();
     this.beWifiTip=true;
-//定时获取路由信息
-    if(this.interval==null){
-      this.intervalInfo();
+
+    if(this.isLogin){
+      //获取已经连接的wifi
+      this.api.netWifiAp().subscribe(res=>{
+        if(res.error===0){
+          this.wifi=res;
+          //console.log(res)
+        }
+      },error=>{
+
+      });
+
+      //定时获取路由信息
+      if(this.interval==null){
+        this.intervalInfo();
+      }
     }
     
   }
