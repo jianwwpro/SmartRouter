@@ -26,6 +26,7 @@ export class RouterInterface {
     net:{
       wan_conf:['net','wan_conf','get'],//获取外网配置信息
       wan_conf_set:['net','wan_conf','set'],//获取外网配置信息
+      ap_list:['net','ap_list','get'],//后去附近的wifi
     }
 
   }
@@ -67,6 +68,13 @@ netWanConfSet(conf){
   delete conf['function'];
   let url = this.mergeUrl(RouterInterface.API.net.wan_conf_set,conf);
   return this.http.get(url).map(res => res.json());
+}
+/**
+ * 获取附近的wifi列表
+ */
+netApList(){
+   let url = this.mergeUrl(RouterInterface.API.net.ap_list,{});
+    return this.http.get(url).map(res => res.json());
 }
 
   /**

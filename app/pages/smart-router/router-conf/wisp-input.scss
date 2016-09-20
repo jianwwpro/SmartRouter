@@ -1,0 +1,14 @@
+.wisp{
+		position: absolute;
+		left: calc(50% - 150px);
+		top: calc(50% - 200px);
+		background: #eeedf2;
+		width: 300px;
+		height: 160px;
+		
+		button{
+			margin: 0;
+			padding: 0;
+			bottom:0;
+		}
+}

@@ -19,7 +19,7 @@
             <ion-segment-button value="2">宽带拨号</ion-segment-button>
             <ion-segment-button value="3">静态IP</ion-segment-button>
             <ion-segment-button value="1">动态IP</ion-segment-button>
-            <ion-segment-button value="4">无线中继</ion-segment-button>
+            <ion-segment-button value="4" (ionSelect)='fetchWifiList()'>无线中继</ion-segment-button>
 
         </ion-segment>
     </div>
@@ -59,9 +59,28 @@
         </ion-list>
 
          <ion-list *ngSwitchCase="'4'">
-            <ion-item>
+            <!--<ion-item>
                 <ion-label primary stacked>WIFI名称</ion-label>
                 <ion-input type="text" value="" [(ngModel)]="conf.ssid" readonly></ion-input>
+            </ion-item>-->
+
+            <ion-item *ngFor="let wifi of wifiList" (click)="wifiSelect(wifi)">
+                <!--<ion-avatar item-left>
+                    <img src="imgs/icons.jpg" alt="">
+                </ion-avatar>-->
+                <h2>
+                    {{wifi.ssid}}
+                </h2>
+                <!--<p>{{wifi.channel}}/{{wifi.security}}</p>-->
+                <!--<button outline item-right disabled>
+                    <ion-icon name="add" *ngIf="!wifi.connected"></ion-icon>
+                    <span>{{wifi.connected?'已':''}}连接</span>
+                </button>  -->
+                <div item-right>
+                    <img *ngIf="wifi.ssid==conf.ssid" src="imgs/check.png" alt="" width="20px">
+                    <img *ngIf="wifi.security" src="imgs/lock.png" alt="" width="10px">
+                    <img src="imgs/signal_{{wifi.signal}}.png" alt="" width="20px">
+                </div>
             </ion-item>
         </ion-list>
     </div>
@@ -185,5 +204,7 @@
             </ion-item>
         </div>
     </ion-list>-->
-	<button block (click)="saveConf()">保存</button>
+	<button block (click)="saveConf()" *ngIf="conf.mode!=4">保存</button>
+    	<button block (click)="fetchWifiList()" *ngIf="conf.mode==4">刷新</button>
+
 </ion-content>
